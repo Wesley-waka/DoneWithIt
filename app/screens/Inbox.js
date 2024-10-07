@@ -9,8 +9,6 @@ import { TextInput } from 'react-native-gesture-handler';
 export default function Inbox() {
   return (
     <View style={styles.container}>
-
-
       <View style={styles.form}>
         <TextInput placeholderTextColor="Send Message" style={[defaultStyles.text, styles.formContainer]}></TextInput>
         {/* <AppTextInput icon="arrow-right-thick" style={styles.sendButton} /> */}

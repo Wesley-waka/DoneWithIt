@@ -1,8 +1,9 @@
 import React from 'react';
 import Constants from 'expo-constants';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Platform } from 'react-native';
 
 function Screen({ children, style }) {
+  console.log('Platform', Platform.Version);
   return (
     <SafeAreaView style={[styles.screen, style]}>
       <View style={[styles.view, style]}>
