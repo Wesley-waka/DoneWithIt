@@ -1,4 +1,5 @@
 import CategoryPickerItem from "./CategoryPickerItem";
+import FormImagePicker from "./FormImagePicker";
 import Screen from "./Screen"
 import {
   AppFormPicker,
@@ -6,21 +7,31 @@ import {
   AppFormField as FormField,
   SubmitButton
 } from "./forms"
+import useLocation from "../hooks/useLocation";
 
 const validationSchema = yupToFormErrors.object().shape({
   title: yupToFormErrors.string().required().min(1).label("Title"),
   price: Yup.number().required().min(1).max(1000).label("Price"),
   description: Yup.string().label("Description"),
-  category: Yup.object().required().nullable().label("Category")
+  category: Yup.object().required().nullable().label("Category"),
+  images: Yup.array().min(1, "Please select at least one image.")
 })
 
 const categories = [
   { label: "Furniture", value: 1, backgroundColor: 'red', icon: 'apps' },
   { label: "Clothing", value: 2, backgroundColor: 'green', icon: 'email' },
-  { label: "Camera", value: 3, icon: 'lock' },
+  { label: "Camera", value: 4, icon: 'lock' },
+  { label: "Camera", value: 5, icon: 'lock' },
+  { label: "Camera", value: 6, icon: 'lock' },
+  { label: "Camera", value: 7, icon: 'lock' },
+  { label: "Camera", value: 8, icon: 'lock' },
+  { label: "Camera", value: 9, icon: 'lock' },
+  { label: "Camera", value: 310, icon: 'lock' },
 ]
 
 const ListEditingsScreen = () => {
+  const location = useLocation();
+
   return (
     <Screen>
       <AppForm
@@ -28,11 +39,13 @@ const ListEditingsScreen = () => {
           title: '',
           price: '',
           description: '',
-          category: null
+          category: null,
+          images: []
         }}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => console.log(location)}
         validationSchema={validationSchema}
       >
+        <FormImagePicker name="Images" />
         <FormField maxLength={255} name="title" placeholder="Title" />
         <FormField
           keyboardType="numeric"

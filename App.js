@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import WelcomeScreen from './app/screens/WelcomeScreen';
 import ViewImageScreen from './app/screens/ViewImageScreen';
@@ -22,12 +22,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import defaultStyles from './app/config/styles';
 import Inbox from './app/screens/Inbox';
+import * as ImagePicker from 'expo-image-picker';
+import * as Permissions from 'expo-permissions';
+import { Button, Image } from 'react-native';
+import ImageInputList from './app/components/ImageInputList';
+import ListEditingsScreen from './app/components/ListingEditScreen';
 
 const Stack = createNativeStackNavigator();
 
 // View -> UIView
 export default function App() {
-  const [isNew, setIsNew] = useState(false);
 
 
 
@@ -70,95 +74,99 @@ export default function App() {
     // <LoginScreen />
 
     // <ListingsScreen />
-    <GestureHandlerRootView style={{ flex: 1 }}>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={WelcomeScreen} />
+    // <GestureHandlerRootView style={{ flex: 1 }}>
+    //   <NavigationContainer>
+    //     <Stack.Navigator>
+    //       <Stack.Screen name="Home" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={WelcomeScreen} />
 
-          <Stack.Screen name="Register" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={LoginScreen} />
-          <Stack.Screen name="ItemListing" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={ListingsScreen} />
-          <Stack.Screen name="ItemDetails" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={ListingDetailsScreen} />
-          <Stack.Screen name="Message" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={MessageScreen} />
-          <Stack.Screen name="View" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={ViewImageScreen} />
+    //       <Stack.Screen name="Register" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={LoginScreen} />
+    //       <Stack.Screen name="ItemListing" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={ListingsScreen} />
+    //       <Stack.Screen name="ItemDetails" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={ListingDetailsScreen} />
+    //       <Stack.Screen name="Message" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={MessageScreen} />
+    //       <Stack.Screen name="View" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={ViewImageScreen} />
 
-          <Stack.Screen name="Account" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={AccountScreen} />
+    //       <Stack.Screen name="Account" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={AccountScreen} />
 
-          <Stack.Screen name="Inbox" options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: defaultStyles.colors.primary,
-            },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold'
-            }
-          }} component={Inbox} />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </GestureHandlerRootView>
+    //       <Stack.Screen name="Inbox" options={{
+    //         title: "",
+    //         headerStyle: {
+    //           backgroundColor: defaultStyles.colors.primary,
+    //         },
+    //         headerTintColor: '#fff',
+    //         headerTitleStyle: {
+    //           fontWeight: 'bold'
+    //         }
+    //       }} component={Inbox} />
+    //     </Stack.Navigator>
+    //   </NavigationContainer>
+    // </GestureHandlerRootView>
+
+    <Screen>
+      <ListEditingsScreen />
+    </Screen>
   );
 }
 
