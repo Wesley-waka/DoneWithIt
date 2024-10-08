@@ -5,16 +5,18 @@ import colors from '../config/colors';
 import ListItem from '../components/ListItem';
 import { TouchableHighlight } from 'react-native-gesture-handler';
 
-function ListingDetailsScreen({ navigation }) {
+function ListingDetailsScreen({ route }) {
+  const listing = route.paarams;
+
   const handlePress = () => {
     navigation.navigate("Account");
   }
   return (
     <View>
-      <Image style={styles.image} source={require('../assets/red-jacket.jpg')} />
+      <Image style={styles.image} source={listing.image} />
       <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>Red jacket for sale</AppText>
-        <AppText style={styles.price}>$100</AppText>
+        <AppText style={styles.title}>{listing.title}</AppText>
+        <AppText style={styles.price}>{listing.price}</AppText>
         <View style={styles.userContainer}>
           <TouchableHighlight>
             <ListItem image={require("../assets/mosh.jpg")}

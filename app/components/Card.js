@@ -5,17 +5,19 @@ import colors from '../config/colors';
 import AppText from './AppText';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-function Card({ title, subTitle, image, navigation }) {
+function Card({ title, subTitle, image, onPress }) {
   return (
-    <View style={styles.card}>
-      <TouchableOpacity onPress={() => navigation.navigate("ItemDetails")}>
-        <Image style={styles.image} source={image} />
-        <View style={styles.detailsContainer}>
-          <AppText style={styles.title}>{title}</AppText>
-          <AppText style={styles.subTitle}>{subTitle}</AppText>
-        </View>
-      </TouchableOpacity>
-    </View>
+    <TouchableWithoutFeeback onPress={onPress}>
+      <View style={styles.card}>
+        <TouchableOpacity onPress={() => navigation.navigate("ItemDetails")}>
+          <Image style={styles.image} source={image} />
+          <View style={styles.detailsContainer}>
+            <AppText style={styles.title}>{title}</AppText>
+            <AppText style={styles.subTitle}>{subTitle}</AppText>
+          </View>
+        </TouchableOpacity>
+      </View>
+    </TouchableWithoutFeeback>
   );
 }
 
