@@ -1,12 +1,12 @@
-import CategoryPickerItem from "./CategoryPickerItem";
-import FormImagePicker from "./FormImagePicker";
-import Screen from "./Screen"
+import CategoryPickerItem from "../components/CategoryPickerItem";
+import FormImagePicker from "../components/FormImagePicker";
+import Screen from "../components/Screen"
 import {
   AppFormPicker,
   AppForm,
   AppFormField as FormField,
   SubmitButton
-} from "./forms"
+} from "../components/forms"
 import useLocation from "../hooks/useLocation";
 
 const validationSchema = yupToFormErrors.object().shape({
