@@ -7,6 +7,7 @@ import {
   AppFormField as FormField,
   SubmitButton
 } from "../components/forms"
+import listingsApi from '../api/listings';
 import useLocation from "../hooks/useLocation";
 
 const validationSchema = yupToFormErrors.object().shape({
@@ -31,9 +32,31 @@ const categories = [
 
 const ListEditingsScreen = () => {
   const location = useLocation();
+  const [uploadVisible, setUploadVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+
+
+  const handleSubmit = async (listing, { resetForm }) => {
+    setProgress(0);
+    setUploadVisible(true);
+    listing.location = location;
+    const result = await listingsApi.addListing({ ...listing, location },
+      (progress) => setProgress(progress)
+    )
+    setUploadVisible(false);
+
+    if (!result.ok) {
+      setUploadVisible(false);
+      return alert('Could not save the listing.');
+    }
+
+    resetForm();
+  }
 
   return (
     <Screen>
+      <UploadScreen onDone={() => setUploadVisible(false)} progress={progress} visible={uploadVisible} />
       <AppForm
         initialValues={{
           title: '',
@@ -42,7 +65,7 @@ const ListEditingsScreen = () => {
           category: null,
           images: []
         }}
-        onSubmit={(values) => console.log(location)}
+        onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
         <FormImagePicker name="Images" />

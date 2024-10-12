@@ -20,6 +20,9 @@
         "backgroundColor": "#ffffff"
       }
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "web": {
       "favicon": "./app/assets/favicon.png"
     },
@@ -33,7 +36,7 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/4238a5a3-ab09-4b63-8350-de7c7d03281d"
+      "fallbackToCacheTimeout": 0
     }
   }
 }
