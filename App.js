@@ -100,27 +100,7 @@ const TabNavigator = () => (
 )
 // View -> UIView
 export default function App() {
-  //componentDidMount
-  const unsubscribe = NetInfo.addEventListener(netInfo => console.log(netInfo))
-
-
-  //componentWillUnmount
-  const netInfo = netInfo();
-
-  const demo = async () => {
-    try {
-      await AsyncStorage.setItem("person", JSON.stringify({ id: 1, }));
-      const value = AsyncStorage.getItem('person')
-      const person = JSON.person(value);
-      console.log(person);
-    } catch (error) {
-      console.log(error);
-    }
-
-  };
-
-  demo();
-
+  const [user, setUser] = useState();
 
   // return <Button disabled={!netInfo.isInternetReachable} />
 
@@ -252,12 +232,12 @@ export default function App() {
     //     </Stack.Navigator>
     //   </NavigationContainer>
     // </GestureHandlerRootView>
-    <>
+    <AuthContext.Provider value={{ user, setUser }}>
       <offlineNotice />
       <NavigationContainer theme={navigationTheme}>
-        <AppNavigator />
+        {user ? <AppNavigator /> : <AuthNavigator />}
       </NavigationContainer>
-    </>
+    </AuthContext.Provider>
   );
 }
 
