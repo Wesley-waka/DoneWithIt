@@ -122,7 +122,7 @@ export default function App() {
   demo();
 
 
-  return <Button disabled={!netInfo.isInternetReachable} />
+  // return <Button disabled={!netInfo.isInternetReachable} />
 
   return (
     // <GestureHandlerRootView style={{ flex: 1 }}>
@@ -252,9 +252,12 @@ export default function App() {
     //     </Stack.Navigator>
     //   </NavigationContainer>
     // </GestureHandlerRootView>
-    <NavigationContainer theme={navigationTheme}>
-      <AppNavigator />
-    </NavigationContainer>
+    <>
+      <offlineNotice />
+      <NavigationContainer theme={navigationTheme}>
+        <AppNavigator />
+      </NavigationContainer>
+    </>
   );
 }
 
