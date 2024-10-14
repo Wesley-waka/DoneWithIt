@@ -32,6 +32,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AuthNavigator from './app/navigation/AuthNavigator';
 import navigationTheme from './app/navigation/navigationTheme';
 import AppNavigator from './app/navigation/AppNavigator';
+import { NetInfo } from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const Link = () => {
   const navigation = useNavigation();
@@ -98,8 +100,29 @@ const TabNavigator = () => (
 )
 // View -> UIView
 export default function App() {
+  //componentDidMount
+  const unsubscribe = NetInfo.addEventListener(netInfo => console.log(netInfo))
 
 
+  //componentWillUnmount
+  const netInfo = netInfo();
+
+  const demo = async () => {
+    try {
+      await AsyncStorage.setItem("person", JSON.stringify({ id: 1, }));
+      const value = AsyncStorage.getItem('person')
+      const person = JSON.person(value);
+      console.log(person);
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
+
+  demo();
+
+
+  return <Button disabled={!netInfo.isInternetReachable} />
 
   return (
     // <GestureHandlerRootView style={{ flex: 1 }}>
