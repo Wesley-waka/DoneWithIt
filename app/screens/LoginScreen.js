@@ -6,7 +6,7 @@ import { ErrorMessage, AppForm, AppFormField, SubmitButton } from '../components
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import authApi from '../api/auth';
-import jwtDecode from 'jwt-decode';
+import auth from '../hooks/useAuth';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -15,7 +15,7 @@ const validationSchema = Yup.object().shape({
 
 
 function LoginScreen({ navigation }) {
-  const authContext = useContext(AuthContext);
+  const { logIn } = useAuth();
   const [loginFailed, setLoginFailed] = useState(false);
   const stack = createNativeStackNavigator();
 
@@ -23,8 +23,7 @@ function LoginScreen({ navigation }) {
     const result = await authApi.login(email, password);
     if (!result.ok) return setLoginFailed(true);
     setLoginFailed(false);
-    const user = jwtDecode(result.data);
-    authContext.setUser(user);
+    auth.logIn(result.data);
   }
 
   return (
